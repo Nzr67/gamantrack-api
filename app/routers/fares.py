@@ -10,11 +10,6 @@ from app.services import FareService, StopService, PublicRouteService, PublicFar
 
 router = APIRouter(prefix="/api/fare", tags=["fare"])
 
-
-# =============================================================================
-# Legacy endpoints (for backward compatibility with existing tests)
-# =============================================================================
-
 @router.get("/", response_model=FareCalculationResponse)
 async def calculate_fare(
     origin_stop_id: int = Query(...),
@@ -54,11 +49,6 @@ async def calculate_fare_post(req: FareCalculationRequest, db: AsyncSession = De
         stage_difference=result["stage_difference"],
         fare=result["fare"],
     )
-
-
-# =============================================================================
-# New Supabase-aligned endpoints
-# =============================================================================
 
 @router.get("/calculate", response_model=FareCalculateResponse)
 async def calculate_fare_by_stages(
